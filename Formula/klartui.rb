@@ -6,20 +6,20 @@ class Klartui < Formula
   desc "A terminal UI for the Klar BFF
 "
   homepage "https://github.com/placeholder-tech/klartui"
-  version "0.0.4"
+  version "0.0.5"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/placeholder-tech/klartui/releases/download/v0.0.4/klartui_Darwin_x86_64.tar.gz"
-      sha256 "c943afbb9f07a760673e51bd9e25bfd3ae26b62a16e236ed3056a9a194e5ed0b"
+      url "https://github.com/placeholder-tech/klartui/releases/download/v0.0.5/klartui_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "d1969ab7c7ce325d7a0dceabc084a8900e2c53b52a6ef975604ed2f3f7c8d3da"
 
       def install
         bin.install "klartui" => "klartui"  # This renames the binary when installing
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/placeholder-tech/klartui/releases/download/v0.0.4/klartui_Darwin_arm64.tar.gz"
-      sha256 "f41cab3f9453c511298ceff55d9aefac6322d433a3a6d76cb2d61d7f0921e4c7"
+      url "https://github.com/placeholder-tech/klartui/releases/download/v0.0.5/klartui_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "c51d78f4e8612ae3f55daac2cbcd8b8ecc1998d65460630c6f2c1a2fa12f1604"
 
       def install
         bin.install "klartui" => "klartui"  # This renames the binary when installing
@@ -29,15 +29,15 @@ class Klartui < Formula
 
   on_linux do
     if Hardware::CPU.intel? and Hardware::CPU.is_64_bit?
-      url "https://github.com/placeholder-tech/klartui/releases/download/v0.0.4/klartui_Linux_x86_64.tar.gz"
-      sha256 "cc03656f5d0d216d2c21dee6d447b016e36b95a8311a30240774b1936eacaf9c"
+      url "https://github.com/placeholder-tech/klartui/releases/download/v0.0.5/klartui_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "d61a3db4c5ad8db6038db00869b2b1fd98b3f1a61b4a215f4d12dc2558ddc2c5"
       def install
         bin.install "klartui" => "klartui"  # This renames the binary when installing
       end
     end
     if Hardware::CPU.arm? and Hardware::CPU.is_64_bit?
-      url "https://github.com/placeholder-tech/klartui/releases/download/v0.0.4/klartui_Linux_arm64.tar.gz"
-      sha256 "6fdc26bef32b6c3c9f467d5e15b25155b175636bf3e5faf18ed651952ec96c84"
+      url "https://github.com/placeholder-tech/klartui/releases/download/v0.0.5/klartui_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "3e6e96140806d61e1b7bca9ce075616f3e4c2b799d8c4e8be6fafd6a223372e4"
       def install
         bin.install "klartui" => "klartui"  # This renames the binary when installing
       end
