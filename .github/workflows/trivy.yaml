@@ -1,0 +1,61 @@
+name: Trivy Security Scan
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: [ master ]
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Generate Trivy Vulnerability Report
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          output: trivy-result.txt
+          format: table
+          scan-ref: .
+          exit-code: 0
+
+      - name: Check Trivy result file
+        run: cat trivy-result.txt
+
+      - name: Format Trivy Scan Result
+        run: |
+          if [ -s trivy-result.txt ]; then
+            echo -e "## Vulnerability Scan Results\n<details><summary>Details</summary>\n\n\`\`\`\n$(cat trivy-result.txt)\n\`\`\`\n</details>" > formatted-trivy-result.md
+          else
+            echo -e "## Vulnerability Scan Results\nNo vulnerabilities were detected." > formatted-trivy-result.md
+          fi
+      - name: Comment PR with Trivy scan results
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: formatted-trivy-result.md
+
+      - name: Clean up Trivy result file
+        run: rm -f trivy-result.txt formatted-trivy-result.md
+
+      - name: Fail build on High/Criticial Vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          format: table
+          scan-ref: .
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: 1
+          # On a subsequent call to the action we know trivy is already installed so can skip this
+          skip-setup-trivy: true
